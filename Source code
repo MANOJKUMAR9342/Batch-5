@@ -1,0 +1,64 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+# Bar chart
+categories = ['A', 'B', 'C', 'D']
+values = [10, 25, 15, 30]
+
+plt.figure(figsize=(6, 4))
+plt.bar(categories, values, color='purple')
+plt.xlabel("Categories")
+plt.ylabel("Values")
+plt.title("Bar Chart Example")
+plt.show()
+
+# Histogram
+data = np.random.randn(1000)
+
+plt.figure(figsize=(7, 5))
+plt.hist(data, bins=30, color='green', edgecolor='black', alpha=0.7)
+plt.xlabel("Value")
+plt.ylabel("Frequency")
+plt.title("Histogram Example")
+plt.show()
+
+# Histogram with KDE using Seaborn
+df = pd.DataFrame(data, columns=['Values'])
+sns.histplot(df['Values'], bins=30, kde=True, color='blue')
+plt.title("Histogram with KDE")
+plt.show()
+
+# Load dataset
+tips = sns.load_dataset('tips')
+
+# Boxplot
+plt.figure(figsize=(6, 4))
+sns.boxplot(x=tips['total_bill'])
+plt.title("Box Plot of Total Bill")
+plt.show()
+
+# Pairplot
+sns.pairplot(tips, hue='sex')
+plt.show()
+
+# Encode categorical columns using separate LabelEncoders
+encoder_sex = LabelEncoder()
+encoder_smoker = LabelEncoder()
+encoder_day = LabelEncoder()
+encoder_time = LabelEncoder()
+
+tips['sex'] = encoder_sex.fit_transform(tips['sex'])
+tips['smoker'] = encoder_smoker.fit_transform(tips['smoker'])
+tips['day'] = encoder_day.fit_transform(tips['day'])
+tips['time'] = encoder_time.fit_transform(tips['time'])
+
+# Correlation matrix
+corr_matrix = tips.corr()
+
+plt.figure(figsize=(7, 5))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Correlation Heatmap")
+plt.show()
